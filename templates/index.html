@@ -4,15 +4,15 @@
   <main class="page-shell">
     <section class="hero reveal">
       <div class="hero-copy">
-        <span class="eyebrow">Portfolio em Python + CV integrado</span>
+        <span class="eyebrow">{{ t.hero_badge }}</span>
         <h1>{{ profile.name }}</h1>
         <p class="hero-role">{{ profile.role }}</p>
         <p class="hero-target">{{ profile.target_role }}</p>
         <p class="hero-text">{{ profile.hero_intro }}</p>
 
         <div class="hero-actions">
-          <a href="#projetos" class="button primary">Ver projetos</a>
-          <a href="#cv" class="button ghost">Abrir CV</a>
+          <a href="#projetos" class="button primary">{{ t.hero_projects }}</a>
+          <a href="#cv" class="button ghost">{{ t.hero_cv }}</a>
         </div>
 
         <ul class="contact-list">
@@ -53,8 +53,8 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Professional Summary</span>
-        <h2>Positioned for remote AI training and code evaluation work</h2>
+        <span class="eyebrow">{{ t.summary_eyebrow }}</span>
+        <h2>{{ t.summary_title }}</h2>
       </div>
       <div class="summary-grid">
         <p class="summary-copy">{{ profile.summary }}</p>
@@ -68,8 +68,8 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Work Style</span>
-        <h2>Availability and remote fit</h2>
+        <span class="eyebrow">{{ t.work_eyebrow }}</span>
+        <h2>{{ t.work_title }}</h2>
       </div>
       <div class="skills-cloud">
         {% for item in profile.availability %}
@@ -80,13 +80,17 @@
 
     <section id="projetos" class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Projects</span>
-        <h2>Projects selected to match the role requirements</h2>
+        <span class="eyebrow">{{ t.projects_eyebrow }}</span>
+        <h2>{{ t.projects_title }}</h2>
       </div>
 
       <div class="project-filter-bar">
         {% for category in profile.project_categories %}
-          {% set filter_value = category|lower|replace(' ', '-')|replace('/', '') %}
+          {% if loop.first %}
+            {% set filter_value = 'all' %}
+          {% else %}
+            {% set filter_value = category|lower|replace(' ', '-')|replace('/', '') %}
+          {% endif %}
           <button
             class="filter-chip {% if loop.first %}active{% endif %}"
             type="button"
@@ -106,7 +110,7 @@
             <h3>{{ project.title }}</h3>
             <p>{{ project.description }}</p>
             <strong>{{ project.impact }}</strong>
-            <a class="project-link" href="{{ url_for('project_detail', slug=project.slug) }}">View project</a>
+            <a class="project-link" href="{{ url_for('project_detail', slug=project.slug, lang=lang) }}">{{ t.view_project }}</a>
           </article>
         {% endfor %}
       </div>
@@ -114,8 +118,8 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Skills</span>
-        <h2>Technical keywords aligned to the role</h2>
+        <span class="eyebrow">{{ t.skills_eyebrow }}</span>
+        <h2>{{ t.skills_title }}</h2>
       </div>
       <div class="skills-cloud">
         {% for skill in profile.skills %}
@@ -126,13 +130,13 @@
 
     <section id="cv" class="section cv-section reveal">
       <div class="section-heading">
-        <span class="eyebrow">CV</span>
-        <h2>Resume overview</h2>
+        <span class="eyebrow">{{ t.cv_eyebrow }}</span>
+        <h2>{{ t.cv_title }}</h2>
       </div>
 
       <div class="cv-grid">
         <article class="cv-card">
-          <h3>Experience</h3>
+          <h3>{{ t.experience }}</h3>
           {% for item in profile.experience %}
             <div class="timeline-item">
               <header>
@@ -150,7 +154,7 @@
         </article>
 
         <article class="cv-card">
-          <h3>Education</h3>
+          <h3>{{ t.education }}</h3>
           {% for item in profile.education %}
             <div class="timeline-item compact">
               <header>
@@ -161,7 +165,7 @@
             </div>
           {% endfor %}
 
-          <h3>Languages</h3>
+          <h3>{{ t.languages }}</h3>
           <ul class="simple-list">
             {% for item in profile.languages %}
               <li>{{ item }}</li>

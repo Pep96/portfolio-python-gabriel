@@ -4,14 +4,14 @@
   <main class="page-shell">
     <section class="hero reveal project-hero">
       <div class="hero-copy">
-        <span class="eyebrow">Project Details</span>
+        <span class="eyebrow">{{ t.project_details }}</span>
         <h1>{{ project.title }}</h1>
         <p class="hero-role">{{ project.tagline }}</p>
         <p class="hero-text">{{ project.description }}</p>
 
         <div class="hero-actions">
-          <a href="{{ url_for('index') }}#projetos" class="button primary">Back to portfolio</a>
-          <a href="{{ profile.github }}" class="button ghost" target="_blank" rel="noreferrer">GitHub profile</a>
+          <a href="{{ url_for('index', lang=lang) }}#projetos" class="button primary">{{ t.back_portfolio }}</a>
+          <a href="{{ profile.github }}" class="button ghost" target="_blank" rel="noreferrer">{{ t.github_profile }}</a>
         </div>
       </div>
 
@@ -23,19 +23,19 @@
         </div>
         <div class="metric-grid">
           <article>
-            <strong>Role</strong>
-            <span>Python + analysis</span>
+            <strong>{{ t.role }}</strong>
+            <span>{{ t.python_analysis }}</span>
           </article>
           <article>
-            <strong>Focus</strong>
-            <span>Quality and reasoning</span>
+            <strong>{{ t.focus }}</strong>
+            <span>{{ t.quality_reasoning }}</span>
           </article>
           <article>
-            <strong>Mode</strong>
-            <span>Remote-ready</span>
+            <strong>{{ t.mode }}</strong>
+            <span>{{ t.remote_ready }}</span>
           </article>
           <article>
-            <strong>Stack</strong>
+            <strong>{{ t.stack }}</strong>
             <span>{{ project.stack }}</span>
           </article>
         </div>
@@ -44,16 +44,16 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Overview</span>
-        <h2>Why this project matters</h2>
+        <span class="eyebrow">{{ t.overview }}</span>
+        <h2>{{ t.why_matters }}</h2>
       </div>
       <div class="summary-grid">
         <div>
-          <h3>Challenge</h3>
+          <h3>{{ t.challenge }}</h3>
           <p class="summary-copy">{{ project.challenge }}</p>
         </div>
         <div>
-          <h3>Solution</h3>
+          <h3>{{ t.solution }}</h3>
           <p class="summary-copy">{{ project.solution }}</p>
         </div>
       </div>
@@ -61,8 +61,8 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Highlights</span>
-        <h2>Key technical points</h2>
+        <span class="eyebrow">{{ t.highlights }}</span>
+        <h2>{{ t.key_points }}</h2>
       </div>
       <div class="strength-list">
         {% for item in project.highlights %}
@@ -73,8 +73,8 @@
 
     <section class="section reveal">
       <div class="section-heading">
-        <span class="eyebrow">Deliverables</span>
-        <h2>What this project demonstrates</h2>
+        <span class="eyebrow">{{ t.deliverables }}</span>
+        <h2>{{ t.what_demo }}</h2>
       </div>
       <div class="skills-cloud">
         {% for item in project.deliverables %}
@@ -86,7 +86,7 @@
     {% if project.slug == "ai-code-review-sandbox" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Review an AI-generated code sample</h2>
         </div>
 
@@ -141,7 +141,7 @@
     {% if project.slug == "python-challenge-generator" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Generate a Python evaluation challenge</h2>
         </div>
 
@@ -195,7 +195,7 @@
     {% if project.slug == "remote-productivity-portal" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Visualize a remote async workflow</h2>
         </div>
 
@@ -255,7 +255,7 @@
     {% if project.slug == "bug-triage-board" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Prioritize issues by severity</h2>
         </div>
 
@@ -302,7 +302,7 @@
     {% if project.slug == "api-response-auditor" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Audit a mocked API payload</h2>
         </div>
 
@@ -344,7 +344,7 @@
     {% if project.slug == "test-case-studio" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Generate focused test scenarios</h2>
         </div>
 
@@ -375,7 +375,7 @@
     {% if project.slug == "dotnet-api-monitor" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Monitor ASP.NET Core endpoints</h2>
         </div>
 
@@ -422,7 +422,7 @@
     {% if project.slug == "dotnet-validation-lab" %}
       <section class="section reveal">
         <div class="section-heading">
-          <span class="eyebrow">Live Demo</span>
+          <span class="eyebrow">{{ t.live_demo }}</span>
           <h2>Inspect .NET validation results</h2>
         </div>
 

@@ -83,6 +83,31 @@ body {
   color: var(--text);
 }
 
+.lang-switch {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lang-chip {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.lang-chip:hover,
+.lang-chip.active {
+  color: #04111d;
+  background: linear-gradient(135deg, var(--accent), #b0fff5);
+  border-color: transparent;
+}
+
 #constellation {
   position: fixed;
   inset: 0;
@@ -648,6 +673,11 @@ body {
   }
 
   .site-nav {
+    justify-content: flex-start;
+  }
+
+  .lang-switch {
+    width: 100%;
     justify-content: flex-start;
   }
 

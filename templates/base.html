@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ t.html_lang }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,12 +21,16 @@
       <div class="header-shell">
         <a href="{{ url_for('index') }}" class="brand-mark">{{ profile.name }}</a>
         <nav class="site-nav">
-          <a href="{{ url_for('index') }}">Inicio</a>
-          <a href="{{ url_for('index') }}#projetos">Projetos</a>
-          <a href="{{ url_for('index') }}#cv">CV</a>
+          <a href="{{ url_for('index', lang=lang) }}">{{ t.nav_home }}</a>
+          <a href="{{ url_for('index', lang=lang) }}#projetos">{{ t.nav_projects }}</a>
+          <a href="{{ url_for('index', lang=lang) }}#cv">{{ t.nav_cv }}</a>
           <a href="{{ profile.github }}" target="_blank" rel="noreferrer">GitHub</a>
           <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a>
         </nav>
+        <div class="lang-switch" aria-label="Language switcher">
+          <a href="{{ request.path }}?lang=pt" class="lang-chip {% if lang == 'pt' %}active{% endif %}">{{ t.lang_pt }}</a>
+          <a href="{{ request.path }}?lang=en" class="lang-chip {% if lang == 'en' %}active{% endif %}">{{ t.lang_en }}</a>
+        </div>
       </div>
     </header>
     {% block content %}{% endblock %}
