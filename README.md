@@ -1,70 +1,77 @@
-# Portfolio com CV em Python
+# Gabriel Pereira Portfolio
 
-Portfolio profissional com CV integrado e tres demos interativas em Flask:
+Interactive portfolio built with `Flask`, combining:
 
-- AI Code Review Sandbox
-- Python Challenge Generator
-- Remote Productivity Portal
+- personal resume section
+- animated landing page
+- project detail pages
+- interactive demos in `Python`, `.NET`, and `QA / Analysis`
 
-## Como executar
+## Current Stack
 
-1. Crie um ambiente virtual:
+- `Python`
+- `Flask`
+- `HTML / CSS / JavaScript`
+- `C# / .NET` project concepts
+
+## Featured Project Areas
+
+- `Python`
+  AI code review, challenge generation, remote productivity
+- `.NET`
+  API monitoring, validation workflows
+- `QA / Analysis`
+  bug triage, API auditing, test design
+
+## Run Locally
 
 ```powershell
 python -m venv .venv
-```
-
-2. Ative o ambiente virtual:
-
-```powershell
 .venv\Scripts\Activate.ps1
-```
-
-3. Instale as dependencias:
-
-```powershell
 pip install -r requirements.txt
-```
-
-4. Execute a aplicacao:
-
-```powershell
 python app.py
 ```
 
-5. Abra no navegador:
+Open:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-## Estrutura
+## Project Structure
 
-- `app.py`: servidor Flask e rotas das demos
-- `data/profile.py`: dados do portfolio, CV e projetos
-- `templates/`: layout principal e paginas de projeto
-- `static/css/style.css`: identidade visual e animacoes
-- `static/js/app.js`: animacoes de entrada e fundo em canvas
+- `app.py`: Flask app and demo routes
+- `data/profile.py`: portfolio data, CV content, and project metadata
+- `templates/`: portfolio layout and project detail pages
+- `static/css/style.css`: styling, layout, and animations
+- `static/js/app.js`: reveal effects, canvas background, and project filters
 
-## Publicar no GitHub
+## Personalization
 
-Se quiser subir este projeto para o seu GitHub, o caminho mais simples e seguro e criar um repositorio novo so para ele.
+Update these files when you want to tailor the portfolio further:
 
-1. No GitHub, crie um repositorio vazio.
-2. Copie esta pasta para um diretorio fora de qualquer outro repositorio Git.
-3. Rode estes comandos dentro da pasta do projeto:
+- `data/profile.py`
+- `templates/index.html`
+- `templates/project.html`
+- `static/css/style.css`
 
-```powershell
-git init
-git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/Pep96/NOME-DO-REPOSITORIO.git
-git push -u origin main
-```
+## GitHub and Deployment
 
-## Personalizacao
+This project is perfect for GitHub as a code portfolio.
 
-Os dados principais ficam em `data/profile.py`.
-O menu e a base das paginas ficam em `templates/base.html`.
-O visual esta em `static/css/style.css`.
+Important note:
+- `GitHub Pages` does not run `Flask` applications on the server.
+- If you publish with GitHub Pages only, the dynamic Flask routes will not work as they do locally.
+
+Best options:
+
+1. Keep this repository on GitHub as your source code portfolio.
+2. Deploy the live Flask app on a Python-friendly platform like `Render`, `Railway`, or `PythonAnywhere`.
+3. If you want, create a separate static version later just for `GitHub Pages`.
+
+## Next Improvements
+
+- add screenshots or mockups for each project
+- export a dedicated PDF resume
+- add an About section
+- create a deploy-ready version for hosting

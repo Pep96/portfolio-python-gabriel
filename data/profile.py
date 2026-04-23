@@ -2,6 +2,7 @@ projects = [
     {
         "slug": "ai-code-review-sandbox",
         "title": "AI Code Review Sandbox",
+        "category": "Python",
         "tagline": "Structured review workflow for generated code analysis.",
         "stack": "Python, Flask, Testing, Review Workflows",
         "description": (
@@ -33,6 +34,7 @@ projects = [
     {
         "slug": "python-challenge-generator",
         "title": "Python Challenge Generator",
+        "category": "Python",
         "tagline": "Challenge and prompt design focused on technical evaluation.",
         "stack": "Python, Algorithms, Data Structures, Content Design",
         "description": (
@@ -64,6 +66,7 @@ projects = [
     {
         "slug": "remote-productivity-portal",
         "title": "Remote Productivity Portal",
+        "category": "Python",
         "tagline": "Remote-first organization for async collaboration.",
         "stack": "Python, Flask, SQLite",
         "description": (
@@ -94,6 +97,7 @@ projects = [
     {
         "slug": "bug-triage-board",
         "title": "Bug Triage Board",
+        "category": "QA / Analysis",
         "tagline": "Prioritization workflow for debugging and issue classification.",
         "stack": "Python, Flask, Debugging, QA Thinking",
         "description": (
@@ -124,6 +128,7 @@ projects = [
     {
         "slug": "api-response-auditor",
         "title": "API Response Auditor",
+        "category": "QA / Analysis",
         "tagline": "Consistency checks for structured API outputs.",
         "stack": "Python, JSON, Validation, Backend Reasoning",
         "description": (
@@ -154,6 +159,7 @@ projects = [
     {
         "slug": "test-case-studio",
         "title": "Test Case Studio",
+        "category": "QA / Analysis",
         "tagline": "Test design for edge cases, correctness, and reliability.",
         "stack": "Python, Testing Strategy, QA, Logic Design",
         "description": (
@@ -184,6 +190,7 @@ projects = [
     {
         "slug": "dotnet-api-monitor",
         "title": ".NET API Monitor",
+        "category": ".NET",
         "tagline": "ASP.NET Core API health and response monitoring.",
         "stack": "C#, ASP.NET Core, REST API, Monitoring",
         "description": (
@@ -214,6 +221,7 @@ projects = [
     {
         "slug": "dotnet-validation-lab",
         "title": ".NET Validation Lab",
+        "category": ".NET",
         "tagline": "C# input validation and structured error handling.",
         "stack": "C#, .NET, Validation, Error Handling",
         "description": (
@@ -275,6 +283,7 @@ profile = {
         "Available for async projects",
         "Based in Latin America",
     ],
+    "project_categories": ["All", "Python", ".NET", "QA / Analysis"],
     "skills": [
         "Python",
         "Flask",

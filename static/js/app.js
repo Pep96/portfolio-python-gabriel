@@ -13,6 +13,21 @@ const observer = new IntersectionObserver(
 
 revealItems.forEach((item) => observer.observe(item));
 
+const filterChips = document.querySelectorAll(".filter-chip");
+const projectCards = document.querySelectorAll(".project-card[data-category]");
+
+filterChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const selected = chip.dataset.filter;
+
+    filterChips.forEach((item) => item.classList.toggle("active", item === chip));
+    projectCards.forEach((card) => {
+      const shouldShow = selected === "all" || card.dataset.category === selected;
+      card.classList.toggle("is-hidden", !shouldShow);
+    });
+  });
+});
+
 const canvas = document.getElementById("constellation");
 const ctx = canvas.getContext("2d");
 let particles = [];
