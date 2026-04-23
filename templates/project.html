@@ -251,5 +251,214 @@
         </div>
       </section>
     {% endif %}
+
+    {% if project.slug == "bug-triage-board" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Prioritize issues by severity</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Severity
+            <select name="severity">
+              <option value="all" {% if demo.selected_filter == "all" %}selected{% endif %}>All</option>
+              <option value="High" {% if demo.selected_filter == "High" %}selected{% endif %}>High</option>
+              <option value="Medium" {% if demo.selected_filter == "Medium" %}selected{% endif %}>Medium</option>
+              <option value="Low" {% if demo.selected_filter == "Low" %}selected{% endif %}>Low</option>
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Filter</button>
+        </form>
+
+        <div class="stats-row">
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.high }}</strong>
+            <span>High</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.medium }}</strong>
+            <span>Medium</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.low }}</strong>
+            <span>Low</span>
+          </article>
+        </div>
+
+        <div class="task-list">
+          {% for item in demo.reports %}
+            <div class="task-item">
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.severity }} severity | {{ item.status }}</span>
+              <p class="summary-copy">{{ item.impact }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "api-response-auditor" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Audit a mocked API payload</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Endpoint
+            <select name="payload">
+              {% for key, item in demo.payloads.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_key %}selected{% endif %}>{{ item.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Inspect</button>
+        </form>
+
+        <div class="demo-grid">
+          <article class="demo-card code-card">
+            <span class="mini-label">Payload</span>
+            <pre><code>{{ demo.payload.payload }}</code></pre>
+          </article>
+
+          <article class="demo-card">
+            <span class="mini-label">Audit Score</span>
+            <div class="score-ring">
+              <strong>{{ demo.score }}</strong>
+              <span>/ 100</span>
+            </div>
+            <h3>Detected Issues</h3>
+            <ul class="simple-list">
+              {% for item in demo.payload.issues %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "test-case-studio" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Generate focused test scenarios</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Scenario
+            <select name="scenario">
+              {% for key, item in demo.scenarios.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_key %}selected{% endif %}>{{ item.title }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Show tests</button>
+        </form>
+
+        <article class="demo-card">
+          <span class="mini-label">Scenario</span>
+          <h3>{{ demo.scenario.title }}</h3>
+          <ul class="simple-list">
+            {% for item in demo.scenario.cases %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </article>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "dotnet-api-monitor" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Monitor ASP.NET Core endpoints</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Status
+            <select name="status">
+              <option value="all" {% if demo.selected_filter == "all" %}selected{% endif %}>All</option>
+              <option value="Healthy" {% if demo.selected_filter == "Healthy" %}selected{% endif %}>Healthy</option>
+              <option value="Warning" {% if demo.selected_filter == "Warning" %}selected{% endif %}>Warning</option>
+              <option value="Critical" {% if demo.selected_filter == "Critical" %}selected{% endif %}>Critical</option>
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Filter</button>
+        </form>
+
+        <div class="stats-row">
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.healthy }}</strong>
+            <span>Healthy</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.warning }}</strong>
+            <span>Warning</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.critical }}</strong>
+            <span>Critical</span>
+          </article>
+        </div>
+
+        <div class="task-list">
+          {% for item in demo.endpoints %}
+            <div class="task-item">
+              <strong>{{ item.name }}</strong>
+              <span>{{ item.status }} | {{ item.latency }}</span>
+              <p class="summary-copy">{{ item.note }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "dotnet-validation-lab" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Inspect .NET validation results</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Validation case
+            <select name="case">
+              {% for key, item in demo.cases.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_key %}selected{% endif %}>{{ item.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Inspect</button>
+        </form>
+
+        <div class="demo-grid">
+          <article class="demo-card code-card">
+            <span class="mini-label">Request DTO</span>
+            <pre><code>{{ demo.case.request }}</code></pre>
+          </article>
+
+          <article class="demo-card">
+            <span class="mini-label">Validation Score</span>
+            <div class="score-ring">
+              <strong>{{ demo.score }}</strong>
+              <span>/ 100</span>
+            </div>
+            <h3>Validation Errors</h3>
+            <ul class="simple-list">
+              {% for item in demo.case.errors %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </section>
+    {% endif %}
   </main>
 {% endblock %}

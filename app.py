@@ -139,6 +139,130 @@ REMOTE_UPDATES = [
     "Consolidated async notes to make handoff easier for distributed collaboration.",
 ]
 
+BUG_REPORTS = [
+    {
+        "title": "Login button freezes on slow network",
+        "severity": "High",
+        "impact": "Users cannot complete sign-in reliably.",
+        "status": "Needs Fix",
+    },
+    {
+        "title": "Profile image fails on first load",
+        "severity": "Medium",
+        "impact": "Visual regression with fallback missing.",
+        "status": "Investigating",
+    },
+    {
+        "title": "Dashboard counter off by one",
+        "severity": "Low",
+        "impact": "Minor reporting mismatch in summary card.",
+        "status": "Backlog",
+    },
+]
+
+API_PAYLOADS = {
+    "orders": {
+        "label": "Orders Endpoint",
+        "payload": """{
+  "status": 200,
+  "orders": [
+    {"id": 101, "total": 49.9, "currency": "BRL"},
+    {"id": 102, "currency": "BRL"}
+  ]
+}""",
+        "issues": [
+            "Second order is missing the 'total' field.",
+            "No pagination metadata is returned for a collection endpoint.",
+        ],
+    },
+    "user": {
+        "label": "User Profile Endpoint",
+        "payload": """{
+  "status": 200,
+  "user": {
+    "id": 7,
+    "name": "Gabriel",
+    "email": null
+  }
+}""",
+        "issues": [
+            "Email is null even though the client expects a string.",
+            "No explicit updated timestamp is provided for cache validation.",
+        ],
+    },
+}
+
+TEST_SCENARIOS = {
+    "sorting": {
+        "title": "Sorting Function",
+        "cases": [
+            "Normal case: [3, 1, 2] -> [1, 2, 3]",
+            "Edge case: [] -> []",
+            "Boundary case: [1] -> [1]",
+            "Duplicate values: [2, 2, 1] -> [1, 2, 2]",
+        ],
+    },
+    "calculator": {
+        "title": "Calculator Division",
+        "cases": [
+            "Normal case: 10 / 2 -> 5",
+            "Edge case: 0 / 5 -> 0",
+            "Invalid input: 5 / 0 -> handled error",
+            "Negative values: -9 / 3 -> -3",
+        ],
+    },
+}
+
+DOTNET_ENDPOINTS = [
+    {
+        "name": "GET /api/orders",
+        "status": "Healthy",
+        "latency": "82 ms",
+        "note": "Stable response time and valid payload contract.",
+    },
+    {
+        "name": "POST /api/payments",
+        "status": "Warning",
+        "latency": "241 ms",
+        "note": "Latency spike detected during peak load simulation.",
+    },
+    {
+        "name": "GET /api/users/{id}",
+        "status": "Critical",
+        "latency": "510 ms",
+        "note": "Intermittent null payload found in profile response.",
+    },
+]
+
+DOTNET_VALIDATION_CASES = {
+    "registration": {
+        "label": "User Registration DTO",
+        "request": """{
+  "name": "",
+  "email": "gabriel.com",
+  "age": 15
+}""",
+        "errors": [
+            "Name is required.",
+            "Email must be a valid email address.",
+            "Age must be at least 18.",
+        ],
+    },
+    "invoice": {
+        "label": "Invoice Request DTO",
+        "request": """{
+  "customerId": 0,
+  "amount": -45,
+  "currency": ""
+}""",
+        "errors": [
+            "CustomerId must be greater than zero.",
+            "Amount must be positive.",
+            "Currency is required.",
+        ],
+    },
+}
+
 
 def build_review_demo(sample_key):
     sample = REVIEW_SAMPLES.get(sample_key, REVIEW_SAMPLES["factorial"])
@@ -199,6 +323,70 @@ def build_productivity_demo(status_filter):
     }
 
 
+def build_bug_triage_demo(severity_filter):
+    valid_filters = {"all", "High", "Medium", "Low"}
+    selected_filter = severity_filter if severity_filter in valid_filters else "all"
+    reports = [
+        bug for bug in BUG_REPORTS if selected_filter == "all" or bug["severity"] == selected_filter
+    ]
+    return {
+        "selected_filter": selected_filter,
+        "reports": reports,
+        "stats": {
+            "high": sum(item["severity"] == "High" for item in BUG_REPORTS),
+            "medium": sum(item["severity"] == "Medium" for item in BUG_REPORTS),
+            "low": sum(item["severity"] == "Low" for item in BUG_REPORTS),
+        },
+    }
+
+
+def build_api_auditor_demo(payload_key):
+    selected_key = payload_key if payload_key in API_PAYLOADS else "orders"
+    payload = API_PAYLOADS[selected_key]
+    return {
+        "selected_key": selected_key,
+        "payloads": API_PAYLOADS,
+        "payload": payload,
+        "score": max(70, 95 - len(payload["issues"]) * 8),
+    }
+
+
+def build_test_case_demo(scenario_key):
+    selected_key = scenario_key if scenario_key in TEST_SCENARIOS else "sorting"
+    return {
+        "selected_key": selected_key,
+        "scenarios": TEST_SCENARIOS,
+        "scenario": TEST_SCENARIOS[selected_key],
+    }
+
+
+def build_dotnet_monitor_demo(status_filter):
+    valid_filters = {"all", "Healthy", "Warning", "Critical"}
+    selected_filter = status_filter if status_filter in valid_filters else "all"
+    endpoints = [
+        item for item in DOTNET_ENDPOINTS if selected_filter == "all" or item["status"] == selected_filter
+    ]
+    return {
+        "selected_filter": selected_filter,
+        "endpoints": endpoints,
+        "stats": {
+            "healthy": sum(item["status"] == "Healthy" for item in DOTNET_ENDPOINTS),
+            "warning": sum(item["status"] == "Warning" for item in DOTNET_ENDPOINTS),
+            "critical": sum(item["status"] == "Critical" for item in DOTNET_ENDPOINTS),
+        },
+    }
+
+
+def build_dotnet_validation_demo(case_key):
+    selected_key = case_key if case_key in DOTNET_VALIDATION_CASES else "registration"
+    return {
+        "selected_key": selected_key,
+        "cases": DOTNET_VALIDATION_CASES,
+        "case": DOTNET_VALIDATION_CASES[selected_key],
+        "score": max(72, 96 - len(DOTNET_VALIDATION_CASES[selected_key]["errors"]) * 6),
+    }
+
+
 @app.route("/")
 def index():
     return render_template("index.html", profile=profile)
@@ -220,6 +408,16 @@ def project_detail(slug):
         )
     elif slug == "remote-productivity-portal":
         demo = build_productivity_demo(request.args.get("status", "all"))
+    elif slug == "bug-triage-board":
+        demo = build_bug_triage_demo(request.args.get("severity", "all"))
+    elif slug == "api-response-auditor":
+        demo = build_api_auditor_demo(request.args.get("payload", "orders"))
+    elif slug == "test-case-studio":
+        demo = build_test_case_demo(request.args.get("scenario", "sorting"))
+    elif slug == "dotnet-api-monitor":
+        demo = build_dotnet_monitor_demo(request.args.get("status", "all"))
+    elif slug == "dotnet-validation-lab":
+        demo = build_dotnet_validation_demo(request.args.get("case", "registration"))
 
     return render_template("project.html", profile=profile, project=project, demo=demo)
 

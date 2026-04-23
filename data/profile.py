@@ -91,6 +91,156 @@ projects = [
             "Portfolio evidence of remote-team thinking",
         ],
     },
+    {
+        "slug": "bug-triage-board",
+        "title": "Bug Triage Board",
+        "tagline": "Prioritization workflow for debugging and issue classification.",
+        "stack": "Python, Flask, Debugging, QA Thinking",
+        "description": (
+            "A project focused on identifying, categorizing, and prioritizing software issues "
+            "using impact, severity, and reproduction clarity."
+        ),
+        "impact": "Shows structured debugging, issue prioritization, and engineering judgment.",
+        "challenge": (
+            "Teams lose time when bugs are reported without consistent prioritization or enough context to act."
+        ),
+        "solution": (
+            "This project presents a compact triage flow where bugs can be sorted by severity, "
+            "reproducibility, and user impact before engineering action."
+        ),
+        "highlights": [
+            "Severity-based classification",
+            "Clear reproduction context",
+            "Focus on debugging workflow quality",
+            "Prioritization built for async teams",
+        ],
+        "deliverables": [
+            "Triage categories",
+            "Bug priority scoring",
+            "Engineering-focused issue review",
+            "Portfolio evidence of debugging maturity",
+        ],
+    },
+    {
+        "slug": "api-response-auditor",
+        "title": "API Response Auditor",
+        "tagline": "Consistency checks for structured API outputs.",
+        "stack": "Python, JSON, Validation, Backend Reasoning",
+        "description": (
+            "A project that inspects mocked API responses to verify structure, missing fields, "
+            "status consistency, and output reliability."
+        ),
+        "impact": "Highlights backend thinking, validation discipline, and response analysis.",
+        "challenge": (
+            "Many application errors come from incomplete or inconsistent API responses that are not validated early."
+        ),
+        "solution": (
+            "This project simulates an auditing tool for checking API payloads against expected rules "
+            "and surfacing issues before they affect the frontend or business logic."
+        ),
+        "highlights": [
+            "Schema-oriented verification",
+            "Readable audit output",
+            "Attention to backend consistency",
+            "Practical data validation mindset",
+        ],
+        "deliverables": [
+            "Payload analysis",
+            "Response rule validation",
+            "Error visibility workflow",
+            "Portfolio proof of API quality review",
+        ],
+    },
+    {
+        "slug": "test-case-studio",
+        "title": "Test Case Studio",
+        "tagline": "Test design for edge cases, correctness, and reliability.",
+        "stack": "Python, Testing Strategy, QA, Logic Design",
+        "description": (
+            "A project centered on building test scenarios, identifying edge cases, and organizing "
+            "coverage ideas for reliable code evaluation."
+        ),
+        "impact": "Demonstrates analytical thinking, validation strategy, and quality-first engineering.",
+        "challenge": (
+            "Code often looks correct in simple examples but fails under edge cases or unexpected input combinations."
+        ),
+        "solution": (
+            "This project organizes test planning around normal flow, boundary values, invalid input, "
+            "and expected outputs to make review and implementation more reliable."
+        ),
+        "highlights": [
+            "Edge-case-driven thinking",
+            "Coverage categories",
+            "Validation strategy for correctness",
+            "Strong alignment with AI and code evaluation work",
+        ],
+        "deliverables": [
+            "Scenario planning",
+            "Coverage-oriented test structure",
+            "Quality assurance mindset",
+            "Portfolio evidence of rigorous validation",
+        ],
+    },
+    {
+        "slug": "dotnet-api-monitor",
+        "title": ".NET API Monitor",
+        "tagline": "ASP.NET Core API health and response monitoring.",
+        "stack": "C#, ASP.NET Core, REST API, Monitoring",
+        "description": (
+            "A .NET-oriented project for inspecting API endpoints, response times, "
+            "status behavior, and operational health signals."
+        ),
+        "impact": "Expands the portfolio with backend monitoring and ASP.NET Core reasoning.",
+        "challenge": (
+            "Backend services need quick visibility into failures, latency spikes, and unstable endpoints."
+        ),
+        "solution": (
+            "This project simulates a lightweight API monitoring dashboard with endpoint status summaries, "
+            "latency indicators, and action-oriented diagnostics."
+        ),
+        "highlights": [
+            "ASP.NET Core alignment",
+            "Backend observability mindset",
+            "Endpoint health tracking",
+            "Operational debugging support",
+        ],
+        "deliverables": [
+            "API status view",
+            "Latency inspection model",
+            "Backend reliability perspective",
+            "Portfolio evidence of .NET backend thinking",
+        ],
+    },
+    {
+        "slug": "dotnet-validation-lab",
+        "title": ".NET Validation Lab",
+        "tagline": "C# input validation and structured error handling.",
+        "stack": "C#, .NET, Validation, Error Handling",
+        "description": (
+            "A project designed to showcase validation rules, consistent error messages, "
+            "and safer request handling in .NET applications."
+        ),
+        "impact": "Shows practical C# engineering discipline around validation and reliability.",
+        "challenge": (
+            "Unvalidated input often creates unstable behavior, inconsistent errors, and difficult debugging paths."
+        ),
+        "solution": (
+            "This project models a validation-first workflow for processing requests with clear error reporting, "
+            "rule checks, and readable feedback for downstream systems."
+        ),
+        "highlights": [
+            "Validation-first backend design",
+            "Readable error reporting",
+            "Strong focus on reliability",
+            "Clear .NET engineering signal",
+        ],
+        "deliverables": [
+            "Validation rule checks",
+            "Structured error messages",
+            "Request quality review",
+            "Portfolio proof of .NET problem solving",
+        ],
+    },
 ]
 
 
