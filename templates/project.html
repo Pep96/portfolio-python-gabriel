@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <main class="page-shell">
+    <section class="hero reveal project-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Project Details</span>
+        <h1>{{ project.title }}</h1>
+        <p class="hero-role">{{ project.tagline }}</p>
+        <p class="hero-text">{{ project.description }}</p>
+
+        <div class="hero-actions">
+          <a href="{{ url_for('index') }}#projetos" class="button primary">Back to portfolio</a>
+          <a href="{{ profile.github }}" class="button ghost" target="_blank" rel="noreferrer">GitHub profile</a>
+        </div>
+      </div>
+
+      <div class="hero-panel floating-card">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="metric-grid">
+          <article>
+            <strong>Role</strong>
+            <span>Python + analysis</span>
+          </article>
+          <article>
+            <strong>Focus</strong>
+            <span>Quality and reasoning</span>
+          </article>
+          <article>
+            <strong>Mode</strong>
+            <span>Remote-ready</span>
+          </article>
+          <article>
+            <strong>Stack</strong>
+            <span>{{ project.stack }}</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Overview</span>
+        <h2>Why this project matters</h2>
+      </div>
+      <div class="summary-grid">
+        <div>
+          <h3>Challenge</h3>
+          <p class="summary-copy">{{ project.challenge }}</p>
+        </div>
+        <div>
+          <h3>Solution</h3>
+          <p class="summary-copy">{{ project.solution }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Highlights</span>
+        <h2>Key technical points</h2>
+      </div>
+      <div class="strength-list">
+        {% for item in project.highlights %}
+          <div class="strength-card">{{ item }}</div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Deliverables</span>
+        <h2>What this project demonstrates</h2>
+      </div>
+      <div class="skills-cloud">
+        {% for item in project.deliverables %}
+          <span>{{ item }}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if project.slug == "ai-code-review-sandbox" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Review an AI-generated code sample</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Sample
+            <select name="sample">
+              {% for key, sample_item in demo.samples.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_key %}selected{% endif %}>{{ sample_item.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Run review</button>
+        </form>
+
+        <div class="demo-grid">
+          <article class="demo-card code-card">
+            <span class="mini-label">Prompt</span>
+            <p class="summary-copy">{{ demo.sample.prompt }}</p>
+            <span class="mini-label">Generated Code</span>
+            <pre><code>{{ demo.sample.code }}</code></pre>
+          </article>
+
+          <article class="demo-card">
+            <span class="mini-label">Evaluation Score</span>
+            <div class="score-ring">
+              <strong>{{ demo.score }}</strong>
+              <span>/ 100</span>
+            </div>
+            <div class="flag-list">
+              {% for flag in demo.quality_flags %}
+                <span>{{ flag }}</span>
+              {% endfor %}
+            </div>
+            <h3>Findings</h3>
+            <ul class="simple-list">
+              {% for issue in demo.sample.issues %}
+                <li><strong>{{ issue.title }}:</strong> {{ issue.detail }}</li>
+              {% endfor %}
+            </ul>
+            <h3>Positive Notes</h3>
+            <ul class="simple-list">
+              {% for item in demo.sample.positive_notes %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "python-challenge-generator" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Generate a Python evaluation challenge</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar split">
+          <label>
+            Topic
+            <select name="topic">
+              {% for key, topic_item in demo.topics.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_topic %}selected{% endif %}>{{ topic_item.title }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            Difficulty
+            <select name="difficulty">
+              <option value="junior" {% if demo.selected_difficulty == "junior" %}selected{% endif %}>Junior</option>
+              <option value="mid" {% if demo.selected_difficulty == "mid" %}selected{% endif %}>Mid-Level</option>
+              <option value="senior" {% if demo.selected_difficulty == "senior" %}selected{% endif %}>Senior</option>
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Generate</button>
+        </form>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span class="mini-label">Challenge</span>
+            <h3>{{ demo.challenge.title }}</h3>
+            <p class="summary-copy">{{ demo.challenge.brief }}</p>
+            <p class="summary-copy"><strong>Target level:</strong> {{ demo.difficulty_label }}</p>
+            <p class="summary-copy"><strong>Evaluation expectation:</strong> {{ demo.expectation }}</p>
+          </article>
+
+          <article class="demo-card">
+            <span class="mini-label">Constraints</span>
+            <ul class="simple-list">
+              {% for item in demo.challenge.constraints %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+            <span class="mini-label">Sample Test Cases</span>
+            <ul class="simple-list">
+              {% for item in demo.challenge.test_cases %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if project.slug == "remote-productivity-portal" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">Live Demo</span>
+          <h2>Visualize a remote async workflow</h2>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Task filter
+            <select name="status">
+              <option value="all" {% if demo.selected_filter == "all" %}selected{% endif %}>All</option>
+              <option value="Planned" {% if demo.selected_filter == "Planned" %}selected{% endif %}>Planned</option>
+              <option value="In Review" {% if demo.selected_filter == "In Review" %}selected{% endif %}>In Review</option>
+              <option value="Done" {% if demo.selected_filter == "Done" %}selected{% endif %}>Done</option>
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Filter</button>
+        </form>
+
+        <div class="stats-row">
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.planned }}</strong>
+            <span>Planned</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.in_review }}</strong>
+            <span>In Review</span>
+          </article>
+          <article class="demo-card compact-card">
+            <strong>{{ demo.stats.done }}</strong>
+            <span>Done</span>
+          </article>
+        </div>
+
+        <div class="demo-grid">
+          <article class="demo-card">
+            <span class="mini-label">Tasks</span>
+            <div class="task-list">
+              {% for task in demo.tasks %}
+                <div class="task-item">
+                  <strong>{{ task.title }}</strong>
+                  <span>{{ task.status }} | {{ task.priority }} priority | {{ task.owner }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </article>
+
+          <article class="demo-card">
+            <span class="mini-label">Async Updates</span>
+            <ul class="simple-list">
+              {% for item in demo.updates %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </article>
+        </div>
+      </section>
+    {% endif %}
+  </main>
+{% endblock %}

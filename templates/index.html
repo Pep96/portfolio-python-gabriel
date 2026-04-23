@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <main class="page-shell">
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <span class="eyebrow">Portfolio em Python + CV integrado</span>
+        <h1>{{ profile.name }}</h1>
+        <p class="hero-role">{{ profile.role }}</p>
+        <p class="hero-target">{{ profile.target_role }}</p>
+        <p class="hero-text">{{ profile.hero_intro }}</p>
+
+        <div class="hero-actions">
+          <a href="#projetos" class="button primary">Ver projetos</a>
+          <a href="#cv" class="button ghost">Abrir CV</a>
+        </div>
+
+        <ul class="contact-list">
+          <li>{{ profile.location }}</li>
+          <li>{{ profile.email }}</li>
+          <li>{{ profile.phone }}</li>
+          <li><a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          <li><a href="{{ profile.github }}" target="_blank" rel="noreferrer">GitHub</a></li>
+        </ul>
+      </div>
+
+      <div class="hero-panel floating-card">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="metric-grid">
+          <article>
+            <strong>10+</strong>
+            <span>Skills tecnicas</span>
+          </article>
+          <article>
+            <strong>3</strong>
+            <span>Projetos em destaque</span>
+          </article>
+          <article>
+            <strong>100%</strong>
+            <span>Estrutura editavel</span>
+          </article>
+          <article>
+            <strong>CV</strong>
+            <span>Integrado no portfolio</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Professional Summary</span>
+        <h2>Positioned for remote AI training and code evaluation work</h2>
+      </div>
+      <div class="summary-grid">
+        <p class="summary-copy">{{ profile.summary }}</p>
+        <div class="strength-list">
+          {% for item in profile.strengths %}
+            <div class="strength-card">{{ item }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Work Style</span>
+        <h2>Availability and remote fit</h2>
+      </div>
+      <div class="skills-cloud">
+        {% for item in profile.availability %}
+          <span>{{ item }}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="projetos" class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Projects</span>
+        <h2>Projects selected to match the role requirements</h2>
+      </div>
+
+      <div class="project-grid">
+        {% for project in profile.projects %}
+          <article class="project-card">
+            <span class="project-stack">{{ project.stack }}</span>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            <strong>{{ project.impact }}</strong>
+            <a class="project-link" href="{{ url_for('project_detail', slug=project.slug) }}">View project</a>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">Skills</span>
+        <h2>Technical keywords aligned to the role</h2>
+      </div>
+      <div class="skills-cloud">
+        {% for skill in profile.skills %}
+          <span>{{ skill }}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="cv" class="section cv-section reveal">
+      <div class="section-heading">
+        <span class="eyebrow">CV</span>
+        <h2>Resume overview</h2>
+      </div>
+
+      <div class="cv-grid">
+        <article class="cv-card">
+          <h3>Experience</h3>
+          {% for item in profile.experience %}
+            <div class="timeline-item">
+              <header>
+                <strong>{{ item.title }}</strong>
+                <span>{{ item.company }}</span>
+                <small>{{ item.period }}</small>
+              </header>
+              <ul>
+                {% for bullet in item["items"] %}
+                  <li>{{ bullet }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </article>
+
+        <article class="cv-card">
+          <h3>Education</h3>
+          {% for item in profile.education %}
+            <div class="timeline-item compact">
+              <header>
+                <strong>{{ item.course }}</strong>
+                <span>{{ item.institution }}</span>
+                <small>{{ item.period }}</small>
+              </header>
+            </div>
+          {% endfor %}
+
+          <h3>Languages</h3>
+          <ul class="simple-list">
+            {% for item in profile.languages %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+{% endblock %}
