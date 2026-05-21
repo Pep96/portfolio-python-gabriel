@@ -1,5 +1,41 @@
 projects = [
     {
+        "slug": "avenue-pulse",
+        "title": "AvenuePulse",
+        "category": ".NET",
+        "tagline": "Distributed brokerage operations platform built for the Avenue context.",
+        "stack": ".NET 9, Golang, RabbitMQ, MySQL, MongoDB, Docker, REST",
+        "description": (
+            "A distributed investment-operations platform that simulates order placement, "
+            "synchronous pricing, asynchronous risk processing, and audit-ready event flow."
+        ),
+        "impact": "Demonstrates senior backend engineering for distributed systems in the .NET ecosystem.",
+        "challenge": (
+            "Brokerage-style platforms need reliable order intake, fast pricing calls, "
+            "clear service boundaries, and asynchronous integration without blocking the customer flow."
+        ),
+        "solution": (
+            "AvenuePulse models a microservice-oriented backend with an Orders API in .NET, "
+            "a Go pricing service, RabbitMQ-ready event contracts, MySQL transactional storage, "
+            "MongoDB risk projections, and a dashboard for visualizing the order/outbox flow."
+        ),
+        "highlights": [
+            "Orders.Api in .NET receives orders and calls pricing synchronously",
+            "pricing-go service provides market quotes through a small HTTP boundary",
+            "Outbox/event envelope design prepares reliable RabbitMQ integration",
+            "Risk.Worker applies Strategy/Composite rules for asynchronous risk decisions",
+            "MySQL and MongoDB are used for different persistence responsibilities",
+            "Local dashboard shows orders, pricing, events, and distributed-system flow",
+        ],
+        "deliverables": [
+            "Distributed .NET solution",
+            "Golang pricing service",
+            "RabbitMQ/MySQL/MongoDB Docker composition",
+            "Architecture documentation",
+            "Dashboard demo for recruiter walkthrough",
+        ],
+    },
+    {
         "slug": "ai-code-review-sandbox",
         "title": "AI Code Review Sandbox",
         "category": "Python",
