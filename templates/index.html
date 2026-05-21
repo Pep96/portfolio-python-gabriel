@@ -108,9 +108,10 @@
             <span class="project-category">{{ project.category }}</span>
             <span class="project-stack">{{ project.stack }}</span>
             <h3>{{ project.title }}</h3>
+            <em class="project-tagline">{{ project.tagline }}</em>
             <p>{{ project.description }}</p>
             <strong>{{ project.impact }}</strong>
-            <a class="project-link" href="{{ url_for('project_detail', slug=project.slug, lang=lang) }}">{{ t.view_project }}</a>
+            <a class="project-link" href="/portfolio/{{ project.slug }}?lang={{ lang }}">{{ t.view_project }}</a>
           </article>
         {% endfor %}
       </div>

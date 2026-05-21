@@ -10,7 +10,7 @@
         <p class="hero-text">{{ project.description }}</p>
 
         <div class="hero-actions">
-          <a href="{{ url_for('index', lang=lang) }}#projetos" class="button primary">{{ t.back_portfolio }}</a>
+          <a href="/portfolio?lang={{ lang }}#projetos" class="button primary">{{ t.back_portfolio }}</a>
           <a href="{{ profile.github }}" class="button ghost" target="_blank" rel="noreferrer">{{ t.github_profile }}</a>
         </div>
       </div>
@@ -82,6 +82,227 @@
         {% endfor %}
       </div>
     </section>
+
+    {% if project.slug == "avenue-pulse" %}
+      <section class="section reveal">
+        <div class="section-heading">
+          <span class="eyebrow">{{ t.live_demo }}</span>
+          <h2>Simulate a brokerage order — end to end</h2>
+        </div>
+
+        <div class="avenue-live-banner">
+          <div class="avenue-live-left">
+            <span class="avenue-live-dot"></span>
+            <div>
+              <strong>Live dashboard available</strong>
+              <span>Run the project locally to open the real Orders.Api interface.</span>
+            </div>
+          </div>
+          <a href="http://localhost:5282/" target="_blank" rel="noreferrer" class="button primary small">
+            Open live dashboard ↗
+          </a>
+        </div>
+
+        <form method="get" class="demo-toolbar">
+          <label>
+            Trading scenario
+            <select name="scenario">
+              {% for key, item in demo.scenarios.items() %}
+                <option value="{{ key }}" {% if key == demo.selected_key %}selected{% endif %}>{{ item.label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <button type="submit" class="button primary small">Run flow</button>
+        </form>
+
+        {% set sc = demo.scenario %}
+
+        <div class="avenue-flow-grid">
+
+          {# ── Left: Order + Pricing + Outbox ─────────────────────────── #}
+          <div class="avenue-col">
+
+            <article class="demo-card avenue-card">
+              <span class="mini-label avenue-service-tag net-tag">.NET — Orders.Api</span>
+              <h3 class="avenue-card-title">Order receipt</h3>
+
+              <div class="avenue-row">
+                <div class="avenue-field">
+                  <span class="avenue-key">Order ID</span>
+                  <code class="avenue-val">{{ sc.order_id_short }}</code>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Account</span>
+                  <code class="avenue-val">{{ sc.account_id }}</code>
+                </div>
+              </div>
+
+              <div class="avenue-row">
+                <div class="avenue-field">
+                  <span class="avenue-key">Symbol</span>
+                  <strong class="avenue-symbol">{{ sc.symbol }}</strong>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Side</span>
+                  <span class="avenue-badge {% if sc.side == 'Buy' %}badge-buy{% else %}badge-sell{% endif %}">{{ sc.side }}</span>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Quantity</span>
+                  <code class="avenue-val">{{ sc.quantity }} shares</code>
+                </div>
+              </div>
+
+              <div class="avenue-row">
+                <div class="avenue-field">
+                  <span class="avenue-key">Limit price</span>
+                  <code class="avenue-val">${{ sc.limit_price }}</code>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Status</span>
+                  <span class="avenue-badge badge-pending">{{ sc.status }}</span>
+                </div>
+              </div>
+            </article>
+
+            <div class="avenue-connector">
+              <span class="avenue-connector-label">HTTP — sync, 2s timeout + retry</span>
+              <span class="avenue-arrow">↓</span>
+            </div>
+
+            <article class="demo-card avenue-card">
+              <span class="mini-label avenue-service-tag go-tag">Go — pricing-go :8081</span>
+              <h3 class="avenue-card-title">Market quote</h3>
+
+              <div class="avenue-row">
+                <div class="avenue-field">
+                  <span class="avenue-key">Market price</span>
+                  <strong class="avenue-price">${{ sc.market_price }}</strong>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Source</span>
+                  <code class="avenue-val">{{ sc.pricing_source }}</code>
+                </div>
+                <div class="avenue-field">
+                  <span class="avenue-key">Latency</span>
+                  <code class="avenue-val">~{{ sc.latency_ms }}ms</code>
+                </div>
+              </div>
+
+              <div class="avenue-row">
+                <div class="avenue-field wide">
+                  <span class="avenue-key">EstimatedNotional</span>
+                  <code class="avenue-val">
+                    {{ sc.quantity }} × min(${{ sc.limit_price }}, ${{ sc.market_price }})
+                    = <strong>${{ sc.notional }}</strong>
+                  </code>
+                </div>
+              </div>
+            </article>
+
+            <div class="avenue-connector">
+              <span class="avenue-connector-label">Outbox → RabbitMQ (async)</span>
+              <span class="avenue-arrow">↓</span>
+            </div>
+
+            <article class="demo-card avenue-card code-card">
+              <span class="mini-label avenue-service-tag event-tag">EventEnvelope — orders.order-placed.v1</span>
+              <h3 class="avenue-card-title">Outbox event</h3>
+              <pre><code>{
+  "messageId": "{{ sc.message_id }}",
+  "eventName": "{{ sc.event_name }}",
+  "correlationId": "{{ sc.corr_id }}",
+  "publishedAt": "{{ sc.now }}",
+  "payload": {
+    "eventId":  "{{ sc.event_id_short }}",
+    "orderId":  "{{ sc.order_id_short }}",
+    "accountId": "{{ sc.account_id }}",
+    "symbol":   "{{ sc.symbol }}",
+    "side":     "{{ sc.side }}",
+    "quantity": {{ sc.quantity }},
+    "estimatedNotional": {{ sc.notional }},
+    "correlationId": "{{ sc.corr_id }}"
+  }
+}</code></pre>
+            </article>
+
+          </div>
+
+          {# ── Right: Risk Worker ──────────────────────────────────────── #}
+          <div class="avenue-col">
+
+            <article class="demo-card avenue-card">
+              <span class="mini-label avenue-service-tag net-tag">.NET — Risk.Worker (async consumer)</span>
+              <h3 class="avenue-card-title">CompositeRiskPolicy evaluation</h3>
+
+              <div class="avenue-rules">
+                {% for rule in sc.rules %}
+                  <div class="avenue-rule {% if rule.passed %}rule-pass{% else %}rule-fail{% endif %}">
+                    <div class="rule-header">
+                      <span class="rule-icon">{% if rule.passed %}✓{% else %}✗{% endif %}</span>
+                      <strong>{{ rule.name }}</strong>
+                      <span class="rule-result {% if rule.passed %}pass-label{% else %}fail-label{% endif %}">
+                        {{ rule.result }}
+                      </span>
+                    </div>
+                    <code class="rule-check">{{ rule.check }}</code>
+                    {% if not rule.passed %}
+                      <span class="rule-shortcircuit">⚡ Short-circuit — no further rules evaluated</span>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </article>
+
+            <div class="avenue-connector">
+              <span class="avenue-connector-label">RiskDecisionRecorded event</span>
+              <span class="avenue-arrow">↓</span>
+            </div>
+
+            <article class="demo-card avenue-card avenue-decision {% if sc.approved %}decision-approved{% else %}decision-rejected{% endif %}">
+              <h3 class="avenue-card-title">Risk decision</h3>
+              <div class="avenue-decision-badge">
+                {% if sc.approved %}
+                  <span class="decision-icon">✅</span>
+                  <strong class="decision-text approved-text">APPROVED</strong>
+                {% else %}
+                  <span class="decision-icon">❌</span>
+                  <strong class="decision-text rejected-text">REJECTED</strong>
+                {% endif %}
+              </div>
+              <div class="avenue-field" style="margin-top: 14px;">
+                <span class="avenue-key">Reason</span>
+                <span class="avenue-val-text">{{ sc.reason }}</span>
+              </div>
+              <div class="avenue-field" style="margin-top: 10px;">
+                <span class="avenue-key">ExposureAfterOrder</span>
+                <code class="avenue-val">${{ sc.exposure }}</code>
+              </div>
+            </article>
+
+            <div class="avenue-connector">
+              <span class="avenue-connector-label">MongoDB upsert — risk.projections</span>
+              <span class="avenue-arrow">↓</span>
+            </div>
+
+            <article class="demo-card avenue-card code-card">
+              <span class="mini-label avenue-service-tag mongo-tag">MongoDB — risk.projections</span>
+              <h3 class="avenue-card-title">Risk projection (read model)</h3>
+              <pre><code>{{ sc.mongo_doc }}</code></pre>
+            </article>
+
+          </div>
+        </div>
+
+        <div class="avenue-arch-note">
+          <span class="mini-label">Architecture note</span>
+          <p>
+            Order placement returns <strong>202 Accepted</strong> immediately after the outbox is written —
+            the risk decision happens fully asynchronously via RabbitMQ.
+            A shared <code>correlationId</code> traces the full flow across both services.
+          </p>
+        </div>
+      </section>
+    {% endif %}
 
     {% if project.slug == "ai-code-review-sandbox" %}
       <section class="section reveal">
