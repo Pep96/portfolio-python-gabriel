@@ -13,12 +13,27 @@ from datetime import datetime, timezone
 
 # Real prices from pricing-go/main.go
 _BASE_PRICES = {
-    "AAPL": 185.00,
-    "MSFT": 428.00,
+    "AAPL":  185.00,
+    "MSFT":  428.00,
+    "NVDA":  137.00,
     "GOOGL": 174.00,
-    "AMZN": 184.00,
-    "TSLA": 178.00,
-    "VOO": 486.00,
+    "AMZN":  184.00,
+    "META":  596.00,
+    "TSLA":  178.00,
+    "AVGO":  232.00,
+    "BRKB":  458.00,
+    "JPM":   248.00,
+    "LLY":   796.00,
+    "V":     288.00,
+    "UNH":   296.00,
+    "XOM":   114.00,
+    "MA":    498.00,
+    "COST":  936.00,
+    "HD":    392.00,
+    "PG":    168.00,
+    "NFLX": 1051.00,
+    "JNJ":   158.00,
+    "VOO":   486.00,
 }
 
 # Max single-order notional from MaxSingleOrderNotionalRule
