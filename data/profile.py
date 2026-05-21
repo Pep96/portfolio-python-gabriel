@@ -1,9 +1,9 @@
 projects = [
     {
-        "slug": "avenue-pulse",
-        "title": "AvenuePulse",
+        "slug": "tradepulse",
+        "title": "TradePulse",
         "category": ".NET",
-        "tagline": "Distributed brokerage operations platform built for the Avenue context.",
+        "tagline": "Distributed trading operations platform — orders, pricing, risk and events.",
         "stack": ".NET 9, Golang, RabbitMQ, MySQL, MongoDB, Docker, REST",
         "description": (
             "A distributed investment-operations platform that simulates order placement, "
@@ -15,7 +15,7 @@ projects = [
             "clear service boundaries, and asynchronous integration without blocking the customer flow."
         ),
         "solution": (
-            "AvenuePulse models a microservice-oriented backend with an Orders API in .NET, "
+            "TradePulse models a microservice-oriented backend with an Orders API in .NET, "
             "a Go pricing service, RabbitMQ-ready event contracts, MySQL transactional storage, "
             "MongoDB risk projections, and a dashboard for visualizing the order/outbox flow."
         ),

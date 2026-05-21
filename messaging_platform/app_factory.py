@@ -189,7 +189,7 @@ def create_app() -> FastAPI:
 
         # Build demo context per project
         demo: dict = {}
-        if slug == "avenue-pulse":
+        if slug == "tradepulse":
             scenario_key = request.query_params.get("scenario", "buy_aapl_50")
             demo = demos.get_avenue_demo(scenario_key)
         elif slug == "ai-code-review-sandbox":
