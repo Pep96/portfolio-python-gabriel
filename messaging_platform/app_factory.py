@@ -79,25 +79,11 @@ def create_app() -> FastAPI:
     )
     app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
-    @app.get("/", response_class=HTMLResponse)
-    async def home(request: Request) -> HTMLResponse:
-        return templates.TemplateResponse(
-            request,
-            "home.html",
-            {
-                "app_name": settings.app_name,
-                "hero_metrics": HERO_METRICS,
-                "product_pillars": PRODUCT_PILLARS,
-                "feature_cards": FEATURE_CARDS,
-                "integration_steps": INTEGRATION_STEPS,
-                "pricing_cards": PRICING_CARDS,
-                "testimonials": TESTIMONIALS,
-                "live_feed": LIVE_FEED,
-                "portfolio_projects": PORTFOLIO_PROJECTS,
-                "api_prefix": settings.api_prefix,
-                "api_key": settings.default_api_key,
-            },
-        )
+    from fastapi.responses import RedirectResponse
+
+    @app.get("/", response_class=RedirectResponse)
+    async def home() -> RedirectResponse:
+        return RedirectResponse(url="/portfolio", status_code=302)
 
     @app.get(f"{settings.api_prefix}/health", response_model=HealthResponse)
     async def health() -> HealthResponse:
